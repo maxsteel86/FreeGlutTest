@@ -1,14 +1,18 @@
 GLUT=-lGL -lGLU -lglut
 OUTDIR=out
 
-all: CreateDir MakeInit MakeParticle MakeSceneBuilder MakeMain
+all: CreateDir MakeInit MakeMotionVector MakeParticle MakeSceneBuilder MakeMain
 
 MakeMain:
 	g++ -Wall main2.cpp $(OUTDIR)/*.o $(GLUT) -o $(OUTDIR)/glutTut1
 
-MakeParticle:
+MakeParticle: MakeMotionVector
 	make -C Particle
 	mv Particle/*.o $(OUTDIR)
+
+MakeMotionVector:
+	make -C MotionVectors
+	mv MotionVectors/*.o $(OUTDIR)
 
 MakeSceneBuilder:
 	make -C SceneBuilder

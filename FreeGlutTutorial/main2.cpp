@@ -5,6 +5,7 @@
 #include "GlutInit/GlutInit.h"
 #include "SceneBuilder/SceneBuilder.h"
 #include "Particle/Particle.h"
+#include "MotionVectors/MotionVector.h"
 
 using namespace GlutInitialisation;
 using namespace SceneGenerator;
@@ -17,7 +18,10 @@ void changeSize(int w, int h)
 	initialiser->ChangeSize(w, h);
 }
 
-Particle* p1 = new Particle(0.025, 30, 30);
+MotionVector position1(0.6, 0, -5);
+MotionVector position2(-0.6, -0.5, -5);
+Particle* p1 = new Particle(0.025, 30, 30, position1);
+Particle* p2 = new Particle(0.025, 30, 30, position2);
 
 void renderScene(void)
 {
@@ -27,7 +31,11 @@ void renderScene(void)
 	// Reset transformations
 	glLoadIdentity();
 
+	p1->UpdateParticle();
+	p2->UpdateParticle();
+
     sceneBuilder->BuildScene(p1);
+	sceneBuilder->BuildScene(p2);
 	glutSwapBuffers();
 }
 

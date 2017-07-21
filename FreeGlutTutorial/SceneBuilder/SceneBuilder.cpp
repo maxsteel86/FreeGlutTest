@@ -6,11 +6,11 @@
 
 namespace SceneGenerator
 {
-    void SceneBuilder::DrawRedParticle(float posX, float posY, float posZ, Particle *particle)
+    void SceneBuilder::DrawRedParticle(Particle *particle)
     {
         glColor3f(1.0, 0.0, 0.0);
         glPushMatrix();
-            glTranslated(posX, posY, posZ);
+            glTranslated(particle->GetX(), particle->GetY(), particle->GetZ());
             glutSolidSphere(particle->GetSize(), particle->GetVerticalSlices(), particle->GetHorizontalSlices());
         glPopMatrix();
     }
@@ -38,12 +38,7 @@ namespace SceneGenerator
     
     void SceneBuilder::BuildScene(Particle* particle)
     {
-        static float posY = 0;
-        
-        this->DrawRedParticle(0.6, posY, -5, particle);
-        this->DrawRedParticle(-0.6, posY * -1.0, -5, particle);
+        this->DrawRedParticle(particle);
         this->DrawBounds();
-        
-        posY += 0.001;
     }
 }
