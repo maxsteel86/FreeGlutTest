@@ -12,8 +12,6 @@ namespace Particles
         this->_horizontalSlices = hSlices;
         this->_verticalSlices = vSlices;
 		this->_position = position;
-
-		//memcpy(&_position, &position, sizeof(MotionVector));
     }
     
     float Particle::GetSize()
@@ -48,7 +46,7 @@ namespace Particles
 
 	void Particle::UpdateParticle()
 	{
-		_position.SetX(_position.GetX() + 0.0001);
-		_position.SetY(_position.GetY() + 0.0001);
+		_position.SetX(_position.GetX() + 0.0005);
+		_position.SetY(_position.GetY() + 0.0005);
 	}
 }

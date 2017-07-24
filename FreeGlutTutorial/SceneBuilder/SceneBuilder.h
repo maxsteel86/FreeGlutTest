@@ -12,8 +12,8 @@ namespace SceneGenerator
     {
         private:
             void DrawRedParticle(Particle* particle);
-            void DrawBounds();
         public:
+			void DrawBounds();
             void BuildScene(Particle* particle);
     };
 }

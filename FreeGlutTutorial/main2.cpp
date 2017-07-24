@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <math.h>
+#include <vector>
 #include <GL/glut.h>
 
 #include "GlutInit/GlutInit.h"
@@ -9,19 +10,31 @@
 
 using namespace GlutInitialisation;
 using namespace SceneGenerator;
+using std::vector;
 
 GlutInit *initialiser = new GlutInit(800, 600);
 SceneBuilder *sceneBuilder = new SceneBuilder();
+vector<Particle> particleCollection;
 
 void changeSize(int w, int h)
 {
 	initialiser->ChangeSize(w, h);
 }
 
-MotionVector position1(0.6, 0, -5);
-MotionVector position2(-0.6, -0.5, -5);
-Particle* p1 = new Particle(0.025, 30, 30, position1);
-Particle* p2 = new Particle(0.025, 30, 30, position2);
+void InitialiseParticles(int particleCount)
+{
+	particleCollection.reserve(particleCount);
+
+	for(int i = 0; i < particleCount; i++)
+	{
+		int randX = rand() % (2 - (-2) + 1) + (-2);
+		int randY = rand() % (2 - (-2) + 1) + (-2);
+
+		MotionVector position(randX, randY, -5);
+		Particle *particle = new Particle(0.025, 30, 30, position);
+		particleCollection.push_back(*particle);
+	}
+}
 
 void renderScene(void)
 {
@@ -31,11 +44,15 @@ void renderScene(void)
 	// Reset transformations
 	glLoadIdentity();
 
-	p1->UpdateParticle();
-	p2->UpdateParticle();
+	for(uint i = 0; i < particleCollection.size(); i++)
+	{
+		Particle *particle = &particleCollection[i];
+		particle->UpdateParticle();
 
-    sceneBuilder->BuildScene(p1);
-	sceneBuilder->BuildScene(p2);
+		sceneBuilder->BuildScene(particle);
+	}
+
+	sceneBuilder->DrawBounds();
 	glutSwapBuffers();
 }
 
@@ -50,6 +67,8 @@ int main(int argc, char **argv)
 	glutInit(&argc, argv);
 	glutCreateWindow("Particles");
     glutSpecialFunc(pressKey);
+
+	InitialiseParticles(5);
 
     glClearColor(0.4, 0.4, 0.6, 1.0);
     // register callbacks

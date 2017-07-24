@@ -39,6 +39,5 @@ namespace SceneGenerator
     void SceneBuilder::BuildScene(Particle* particle)
     {
         this->DrawRedParticle(particle);
-        this->DrawBounds();
     }
 }
