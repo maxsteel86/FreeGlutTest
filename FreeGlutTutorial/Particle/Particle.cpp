@@ -31,22 +31,22 @@ namespace Particles
 
 	float Particle::GetX()
 	{
-		return _position.GetX();
+		return this->_position.GetX();
 	}
 
 	float Particle::GetY()
 	{
-		return _position.GetY();
+		return this->_position.GetY();
 	}
 
 	float Particle::GetZ()
 	{
-		return _position.GetZ();
+		return this->_position.GetZ();
 	}
 
 	void Particle::UpdateParticle()
 	{
-		_position.SetX(_position.GetX() + 0.0005);
-		_position.SetY(_position.GetY() + 0.0005);
+		this->_position.SetX(_position.GetX() + 0.0005);
+		this->_position.SetY(_position.GetY() + 0.0005);
 	}
 }

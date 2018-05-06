@@ -12,13 +12,13 @@ using namespace GlutInitialisation;
 using namespace SceneGenerator;
 using std::vector;
 
-GlutInit *initialiser = new GlutInit(800, 600);
-SceneBuilder *sceneBuilder = new SceneBuilder();
+GlutInit initialiser;
+SceneBuilder sceneBuilder;
 vector<Particle> particleCollection;
 
 void changeSize(int w, int h)
 {
-	initialiser->ChangeSize(w, h);
+	initialiser.ChangeSize(w, h);
 }
 
 void InitialiseParticles(int particleCount)
@@ -31,8 +31,8 @@ void InitialiseParticles(int particleCount)
 		int randY = rand() % (2 - (-2) + 1) + (-2);
 
 		MotionVector position(randX, randY, -5);
-		Particle *particle = new Particle(0.025, 30, 30, position);
-		particleCollection.push_back(*particle);
+		Particle particle(0.025, 30, 30, position);
+		particleCollection.push_back(particle);
 	}
 }
 
@@ -46,27 +46,37 @@ void renderScene(void)
 
 	for(uint i = 0; i < particleCollection.size(); i++)
 	{
-		Particle *particle = &particleCollection[i];
-		particle->UpdateParticle();
+		Particle &particle = particleCollection[i];
+		particle.UpdateParticle();
 
-		sceneBuilder->BuildScene(particle);
+		sceneBuilder.BuildScene(particle);
 	}
 
-	sceneBuilder->DrawBounds();
+	sceneBuilder.DrawBounds();
 	glutSwapBuffers();
 }
 
-void pressKey(int key, int xx, int yy)
+void handleSpecialKey(int key, int xx, int yy)
 {
-	initialiser->PressKey(key);
+	initialiser.HandleSpecialKey(key);
+}
+
+void handleRegularKey(unsigned char key, int xx, int yy)
+{
+	initialiser.HandleRegularKey(key);
 }
 
 int main(int argc, char **argv)
 {
-	// init GLUT and create window
 	glutInit(&argc, argv);
-	glutCreateWindow("Particles");
-    glutSpecialFunc(pressKey);
+	
+	// init GLUT and create window
+	initialiser.InitialiseWindow(800, 600);
+	
+	//glutInit(&argc, argv);
+	//glutCreateWindow("Particles");
+    glutSpecialFunc(handleSpecialKey);
+    glutKeyboardFunc(handleRegularKey);
 
 	InitialiseParticles(5);
 

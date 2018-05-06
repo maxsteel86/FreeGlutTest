@@ -4,12 +4,18 @@
 
 namespace GlutInitialisation
 {
-    GlutInit::GlutInit(int width, int height)
+    GlutInit::GlutInit()
     {
         glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-        glutInitWindowPosition(100, 100);
-        glutInitWindowSize(width, height);
     }
+    
+    void GlutInit::InitialiseWindow(int width, int height)
+    {
+		glutInitWindowPosition(100, 100);
+        glutInitWindowSize(width, height);
+        
+		glutCreateWindow("Particles");
+	}
     
     void GlutInit::ChangeSize(int w, int h)
     {
@@ -38,7 +44,7 @@ namespace GlutInitialisation
         glMatrixMode(GL_MODELVIEW);
     }
     
-    void GlutInit::PressKey(int key)
+    void GlutInit::HandleSpecialKey(int key)
     {
         switch (key)
         {
@@ -47,4 +53,14 @@ namespace GlutInitialisation
                 break;
         }
     }
+    
+    void GlutInit::HandleRegularKey(unsigned char key)
+    {
+		switch (key)
+		{
+			case 27:	// ESCAPE
+			std::exit(0);
+			break;
+		}
+	}
 }

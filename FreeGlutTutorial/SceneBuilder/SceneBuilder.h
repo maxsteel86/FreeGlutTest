@@ -11,10 +11,10 @@ namespace SceneGenerator
     class SceneBuilder
     {
         private:
-            void DrawRedParticle(Particle* particle);
+            void DrawRedParticle(Particle particle);
         public:
 			void DrawBounds();
-            void BuildScene(Particle* particle);
+            void BuildScene(Particle particle);
     };
 }
 
